@@ -1,0 +1,35 @@
+# Build files
+*.o
+*.obj
+*.exe
+*.out
+*.log
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Visual Studio
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+*.sln
+*.ncb
+*.suo
+*.opensdf
+*.sdf
+*.db
+ipch/
+.vscode/
+
+# Code::Blocks
+*.depend
+*.layout
+
+# MacOS
+.DS_Store
+
+# GLAD (generated files, if not in source control)
+glad/
