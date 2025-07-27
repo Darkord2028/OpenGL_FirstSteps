@@ -1,0 +1,3 @@
+﻿  main.c
+E:\Bleach\CProjects\OpenGL_FirstSteps\main.c(64,6): warning C4013: 'strcmp' undefined; assuming extern returning int
+  OpenGL_SandCastle.vcxproj -> E:\Bleach\CProjects\OpenGL_FirstSteps\x64\Debug\OpenGL_FirstSteps.exe

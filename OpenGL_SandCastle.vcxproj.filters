@@ -19,9 +19,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{0a6231cd-c5ca-42bb-8013-1374202701cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Header">
-      <UniqueIdentifier>{9402116f-040b-4266-8d1f-9b0f548243a9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -35,8 +32,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\input.h">
-      <Filter>src\Header</Filter>
+    <ClInclude Include="include\input.h">
+      <Filter>include</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Standard.frag">
+      <Filter>src</Filter>
+    </None>
+    <None Include="src\Standard.vert">
+      <Filter>src</Filter>
+    </None>
   </ItemGroup>
 </Project>
