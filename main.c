@@ -6,15 +6,21 @@
 #include <stdlib.h>
 
 #pragma region Variables
-unsigned int VAO, VBO;
+unsigned int VOA;
 unsigned int shaderProgram;
 #pragma endregion
 
 #pragma region Data
-static float vertices[] = {
-        -0.5f, -0.5f, 0.0f, // Bottom Left
-         0.5f, -0.5f, 0.0f, // Bottom Right
-         0.0f,  0.5f, 0.0f  // Top
+float positions[] = {
+    -0.5f, -0.5f, // 0
+     0.5f, -0.5f, // 1
+	 0.5f,  0.5f, // 2
+	-0.5f,  0.5f  // 3
+};
+
+static unsigned int indices[] = {
+        0, 1, 2,
+        2, 3, 0
 };
 #pragma endregion
 
@@ -56,7 +62,6 @@ char* LoadShaderSource(const char* filepath) {
     return buffer;
 }
 
-
 void CheckCompileErrors(unsigned int shader, const char* type)
 {
 	int success;
@@ -87,17 +92,22 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 void InitShaderProgram()
 {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &VOA);
+	glBindVertexArray(VOA);
 
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    unsigned int buffers;
+	glGenBuffers(1, &buffers);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers);
+	glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
     // Position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
+    unsigned int IBO;
+	glGenBuffers(1, &IBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
     // Load Shaders
     const char* vertexPath = "src/Standard.vert";
@@ -161,15 +171,16 @@ int main() {
 
 	InitShaderProgram();
 
+    glUseProgram(shaderProgram);
+
     while (!glfwWindowShouldClose(window)) {
 
 		ProcessInput(window);
         glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw Triangle
-		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();

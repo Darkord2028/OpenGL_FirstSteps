@@ -1,8 +1,7 @@
 #version 330 core
-out vec4 fragColor;
-in vec4 vertexColor;
+layout(location = 0) out vec4 vertexColor;
 
 void main()
 {
-	fragColor = vertexColor;
+	vertexColor = vec4(1.0, 1.0, 1.0, 1.0); // Set the output color to white
 }

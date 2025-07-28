@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{E781101C-9824-4F16-B0A0-BD38083AC985}|OpenGL_SandCastle.vcxproj|solutionrelative:main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E781101C-9824-4F16-B0A0-BD38083AC985}|OpenGL_SandCastle.vcxproj|E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\src\\Standard.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{E781101C-9824-4F16-B0A0-BD38083AC985}|OpenGL_SandCastle.vcxproj|solutionrelative:src\\Standard.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E781101C-9824-4F16-B0A0-BD38083AC985}|OpenGL_SandCastle.vcxproj|E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\src\\Standard.frag||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{E781101C-9824-4F16-B0A0-BD38083AC985}|OpenGL_SandCastle.vcxproj|solutionrelative:src\\Standard.frag||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E781101C-9824-4F16-B0A0-BD38083AC985}|OpenGL_SandCastle.vcxproj|E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\src\\Standard.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{E781101C-9824-4F16-B0A0-BD38083AC985}|OpenGL_SandCastle.vcxproj|solutionrelative:src\\Standard.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,26 +26,26 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Standard.vert",
               "DocumentMoniker": "E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\src\\Standard.vert",
               "RelativeDocumentMoniker": "src\\Standard.vert",
               "ToolTip": "E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\src\\Standard.vert",
               "RelativeToolTip": "src\\Standard.vert",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-07-27T08:04:04.673Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Standard.frag",
               "DocumentMoniker": "E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\src\\Standard.frag",
               "RelativeDocumentMoniker": "src\\Standard.frag",
               "ToolTip": "E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\src\\Standard.frag",
               "RelativeToolTip": "src\\Standard.frag",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-07-27T08:03:58.277Z",
               "EditorCaption": ""
@@ -58,7 +58,7 @@
               "RelativeDocumentMoniker": "main.c",
               "ToolTip": "E:\\Bleach\\CProjects\\OpenGL_FirstSteps\\main.c",
               "RelativeToolTip": "main.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-07-26T14:25:27.015Z",
               "EditorCaption": ""
