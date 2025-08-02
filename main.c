@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 #pragma region Variables
-unsigned int VOA;
 unsigned int shaderProgram;
 #pragma endregion
 
@@ -86,19 +85,17 @@ void CheckCompileErrors(unsigned int shader, const char* type)
 	}
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
     glViewport(0, 0, width, height);
 }
 
 void InitShaderProgram()
 {
-	glGenVertexArrays(1, &VOA);
-	glBindVertexArray(VOA);
-
     unsigned int buffers;
 	glGenBuffers(1, &buffers);
 	glBindBuffer(GL_ARRAY_BUFFER, buffers);
-	glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
     // Position attribute
     glEnableVertexAttribArray(0);
