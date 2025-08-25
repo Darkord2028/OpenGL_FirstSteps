@@ -17,11 +17,47 @@
 #include "stb_image/stb_image.h"
 
 float vertices[] = {
-	// position         // color           // tex coord
-	 0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f,   // top right
-	 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,   // bottom right
-	-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f,   // bottom left
-	-0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f    // top left
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
 unsigned short indices[] =
@@ -38,7 +74,7 @@ int main()
 		return 1;
 	}
 
-	GLFWwindow *window = glfwCreateWindow(640, 480, "First Window", NULL, NULL);
+	GLFWwindow *window = glfwCreateWindow(800, 600, "First Window", NULL, NULL);
 	if (!window)
 	{
 		std::cout << "Window Error!/n";
@@ -124,15 +160,15 @@ int main()
 
 	// Position Vertex Array
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
 
 	// Color Vertex Array
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void *)(sizeof(float) * 3));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void *)(sizeof(float) * 3));
 
 	// Texture Vertex Array
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 6));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(sizeof(float) * 3));
 
 #pragma endregion
 
@@ -164,9 +200,25 @@ int main()
 	GLuint u_texture1 = shader.GetUniformLocation("u_texture1");
 	GLuint u_texture2 = shader.GetUniformLocation("u_texture2");
 	GLuint u_transform = shader.GetUniformLocation("u_transform");
+	GLuint u_view = shader.GetUniformLocation("u_view");
+	GLuint u_projection = shader.GetUniformLocation("u_projection");
 
 #pragma endregion
 
+	glm::vec3 cubePositions[] = {
+	glm::vec3(0.0f,  0.0f,  0.0f),
+	glm::vec3(2.0f,  5.0f, -15.0f),
+	glm::vec3(-1.5f, -2.2f, -2.5f),
+	glm::vec3(-3.8f, -2.0f, -12.3f),
+	glm::vec3(2.4f, -0.4f, -3.5f),
+	glm::vec3(-1.7f,  3.0f, -7.5f),
+	glm::vec3(1.3f, -2.0f, -2.5f),
+	glm::vec3(1.5f,  2.0f, -2.5f),
+	glm::vec3(1.5f,  0.2f, -1.5f),
+	glm::vec3(-1.3f,  1.0f, -1.5f)
+	};
+
+	glEnable(GL_DEPTH_TEST);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -174,7 +226,7 @@ int main()
 		glfwGetWindowSize(window, &w, &h);
 		glViewport(0, 0, w, h);
 
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region ImGui
 		ImGui_ImplOpenGL3_NewFrame();
@@ -190,6 +242,18 @@ int main()
 		//ImGui::ShowDemoWindow();
 		ImGui::End();
 
+#pragma region Matrix
+
+		// View Matrix
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		// Projection Matrix
+		glm::mat4 projection;
+		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+
+#pragma endregion
+
 		shader.bind();
 		glUniform1i(u_texture1, 0);
 		glUniform1i(u_texture2, 1);
@@ -204,19 +268,20 @@ int main()
 
 		glBindVertexArray(VAO);
 
-		glm::mat4 transform1 = glm::mat4(1.0f);
-		transform1 = glm::translate(transform1, glm::vec3(0.5f, -0.5f, 0.0f));
-		transform1 = glm::rotate(transform1, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(u_transform, 1, GL_FALSE, glm::value_ptr(transform1));
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
+		glUniformMatrix4fv(u_view, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(u_projection, 1, GL_FALSE, glm::value_ptr(projection));
 
-
-		glm::mat4 transform2 = glm::mat4(1.0f);
-		transform2 = glm::translate(transform2, glm::vec3(-0.5f, 0.5f, 0.0f));
-		float scale = sin(glfwGetTime());
-		transform2 = glm::scale(transform2, glm::vec3(scale, scale, scale));
-		glUniformMatrix4fv(u_transform, 1, GL_FALSE, glm::value_ptr(transform2));
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			// Transform Matrix
+			glm::mat4 transform = glm::mat4(1.0f);
+			transform = glm::translate(transform, cubePositions[i]);
+			float angle = 20.0f * i;
+			if (angle == 0) { angle = 10; }
+			transform = glm::rotate(transform, (float)glfwGetTime() * glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			glUniformMatrix4fv(u_transform, 1, GL_FALSE, glm::value_ptr(transform));
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 
 #pragma region ImGui
 		ImGui::Render();
