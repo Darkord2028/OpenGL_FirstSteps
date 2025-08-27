@@ -66,6 +66,23 @@ unsigned short indices[] =
 	0, 2, 3
 };
 
+glm::vec3 CameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 CameraUp = glm::vec3(0.0f, 0.1f, 0.0f);
+
+void processInput(GLFWwindow* window)
+{
+	const float cameraSpeed = 0.05f;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		CameraPos += cameraSpeed * CameraFront;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		CameraPos -= cameraSpeed * CameraFront;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		CameraPos -= glm::normalize(glm::cross(CameraFront, CameraUp)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		CameraPos += glm::normalize(glm::cross(CameraFront, CameraUp)) * cameraSpeed;
+}
+
 int main()
 {
 	if (!glfwInit())
@@ -228,6 +245,8 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		processInput(window);
+
 #pragma region ImGui
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -244,20 +263,9 @@ int main()
 
 #pragma region Matrix
 
-		// Camera
-		glm::vec3 CameraPos = glm::vec3(0.0f, 0.0f, -3.0f);
-		glm::vec3 CameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 CameraDirection = glm::normalize(CameraTarget - CameraPos);
-		glm::vec3 up = glm::vec3(0.0f, 0.1f, 0.0f);
-		glm::vec3 CameraRight = glm::vec3(glm::dot(up, CameraDirection));
-		glm::vec3 CameraUp = glm::vec3(glm::dot(CameraDirection, CameraRight));
-
 		// View Matrix
-		const float radius = 10.0f;
-		float camX = sin(glfwGetTime()) * radius;
-		float camZ = cos(glfwGetTime()) * radius;
 		glm::mat4 view;
-		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		view = glm::lookAt(CameraPos, CameraPos + CameraFront, CameraUp);
 
 		// Projection Matrix
 		glm::mat4 projection;
@@ -301,7 +309,6 @@ int main()
 		glViewport(0, 0, displayWidth, diaplayHeight);
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 #pragma endregion
-
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
