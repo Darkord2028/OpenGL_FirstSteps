@@ -244,9 +244,20 @@ int main()
 
 #pragma region Matrix
 
+		// Camera
+		glm::vec3 CameraPos = glm::vec3(0.0f, 0.0f, -3.0f);
+		glm::vec3 CameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 CameraDirection = glm::normalize(CameraTarget - CameraPos);
+		glm::vec3 up = glm::vec3(0.0f, 0.1f, 0.0f);
+		glm::vec3 CameraRight = glm::vec3(glm::dot(up, CameraDirection));
+		glm::vec3 CameraUp = glm::vec3(glm::dot(CameraDirection, CameraRight));
+
 		// View Matrix
-		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		const float radius = 10.0f;
+		float camX = sin(glfwGetTime()) * radius;
+		float camZ = cos(glfwGetTime()) * radius;
+		glm::mat4 view;
+		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Projection Matrix
 		glm::mat4 projection;
