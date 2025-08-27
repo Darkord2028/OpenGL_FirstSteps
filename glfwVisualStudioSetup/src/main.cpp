@@ -70,9 +70,12 @@ glm::vec3 CameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 CameraUp = glm::vec3(0.0f, 0.1f, 0.0f);
 
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
+
 void processInput(GLFWwindow* window)
 {
-	const float cameraSpeed = 0.05f;
+	const float cameraSpeed = 5.0f * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		CameraPos += cameraSpeed * CameraFront;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -239,6 +242,10 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		int w = 0, h = 0;
 		glfwGetWindowSize(window, &w, &h);
 		glViewport(0, 0, w, h);
