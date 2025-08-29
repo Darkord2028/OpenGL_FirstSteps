@@ -1,5 +1,6 @@
 #pragma once
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 
 struct Shader
@@ -13,6 +14,8 @@ struct Shader
 	void bind();
 
 	void clear();
+
+	void SetVec3(GLuint ID, glm::vec3 value);
 
 	GLint GetUniformLocation(const char* name);
 

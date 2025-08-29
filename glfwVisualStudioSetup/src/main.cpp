@@ -17,47 +17,47 @@
 #include "stb_image/stb_image.h"
 
 float vertices[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
 
 unsigned short indices[] =
@@ -69,6 +69,10 @@ unsigned short indices[] =
 glm::vec3 CameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 CameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+glm::vec3 LightPos = glm::vec3(0.0f, 0.0f, 1.0f);
+glm::vec3 LightFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 LightUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -111,6 +115,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 void processInput(GLFWwindow* window)
 {
 	const float cameraSpeed = 5.0f * deltaTime;
+	const float lightMoveSpeed = 5.0f * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		CameraPos += cameraSpeed * CameraFront;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -119,6 +124,14 @@ void processInput(GLFWwindow* window)
 		CameraPos -= glm::normalize(glm::cross(CameraFront, CameraUp)) * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		CameraPos += glm::normalize(glm::cross(CameraFront, CameraUp)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+		LightPos += lightMoveSpeed * LightFront;
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+		LightPos -= lightMoveSpeed * LightFront;
+	if (glfwGetKey(window, GLFW_KEY_J))
+		LightPos -= glm::normalize(glm::cross(LightFront, LightUp)) * lightMoveSpeed;
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+		LightPos += glm::normalize(glm::cross(LightFront, LightUp)) * lightMoveSpeed;
 	if (glfwGetMouseButton(window, 1) == GLFW_PRESS)
 		glfwSetCursorPosCallback(window, mouse_callback);
 }
@@ -212,8 +225,12 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	// Position Vertex Array
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
+
+	// Normal Vertex Array
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	GLuint lightVAO = 0;
 	glGenVertexArrays(1, &lightVAO);
@@ -221,7 +238,7 @@ int main()
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 #pragma endregion
@@ -254,6 +271,8 @@ int main()
 	GLuint u_transform = shader.GetUniformLocation("u_transform");
 	GLuint u_view = shader.GetUniformLocation("u_view");
 	GLuint u_projection = shader.GetUniformLocation("u_projection");
+	GLuint u_lightPos = shader.GetUniformLocation("u_lightPos");
+	GLuint u_viewPos = shader.GetUniformLocation("u_viewPos");
 
 	Shader lightShader;
 	lightShader.loadShaderProgramFromFile("resources/LightShader.vert", "resources/LightShader.frag");
@@ -324,6 +343,9 @@ int main()
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
+		glm::mat4 lightTransform = glm::mat4(1.0f);
+		glm::vec3 lightPos(LightPos);
+
 #pragma endregion
 
 		shader.bind();
@@ -336,6 +358,8 @@ int main()
 		glUniformMatrix4fv(u_transform, 1, GL_FALSE, glm::value_ptr(transform));
 		glUniformMatrix4fv(u_view, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(u_projection, 1, GL_FALSE, glm::value_ptr(projection));
+		shader.SetVec3(u_lightPos, lightPos);
+		shader.SetVec3(u_viewPos, CameraPos);
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -343,8 +367,6 @@ int main()
 		static float objectColor[3] = { 0.5, 0.5, 0.5 };
 		glUniform3fv(u_lightColor, 1, lightColor);
 
-		glm::mat4 lightTransform = glm::mat4(1.0f);
-		glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 		lightTransform = glm::translate(lightTransform, lightPos);
 		lightTransform = glm::scale(lightTransform, glm::vec3(0.2f));
 		glUniformMatrix4fv(u_lightTransform, 1, GL_FALSE, glm::value_ptr(lightTransform));

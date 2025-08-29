@@ -167,6 +167,11 @@ void Shader::clear()
 	*this = {};
 }
 
+void Shader::SetVec3(GLuint ID, glm::vec3 value)
+{
+	glUniform3f(ID, value.x, value.y, value.z);
+}
+
 GLint Shader::GetUniformLocation(const char* name)
 {
 	GLint rez = glGetUniformLocation(id, name);
