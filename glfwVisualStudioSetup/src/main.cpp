@@ -68,7 +68,7 @@ unsigned short indices[] =
 
 glm::vec3 CameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 CameraUp = glm::vec3(0.0f, 0.1f, 0.0f);
+glm::vec3 CameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -102,9 +102,9 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	if (pitch < -89.0f) pitch = -89.0f;
 
 	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw) * cos(glm::radians(yaw)));
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw) * cos(glm::radians(pitch)));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	CameraFront = glm::normalize(direction);
 }
 
@@ -215,13 +215,14 @@ int main()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
 
-	// Color Vertex Array
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void *)(sizeof(float) * 3));
+	GLuint lightVAO = 0;
+	glGenVertexArrays(1, &lightVAO);
+	glBindVertexArray(lightVAO);
 
-	// Texture Vertex Array
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(sizeof(float) * 3));
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 #pragma endregion
 
@@ -246,15 +247,22 @@ int main()
 	Shader shader;
 
 	shader.loadShaderProgramFromFile("resources/Shader.vert", "resources/Shader.frag");
-	shader.bind();
 
 	//GLuint u_time = shader.GetUniformLocation("u_time");
-	GLuint u_color = shader.GetUniformLocation("u_color");
-	GLuint u_texture1 = shader.GetUniformLocation("u_texture1");
-	GLuint u_texture2 = shader.GetUniformLocation("u_texture2");
+	GLuint u_cubeColor = shader.GetUniformLocation("u_objectColor");
+	GLuint u_cubeLightColor = shader.GetUniformLocation("u_lightColor");
 	GLuint u_transform = shader.GetUniformLocation("u_transform");
 	GLuint u_view = shader.GetUniformLocation("u_view");
 	GLuint u_projection = shader.GetUniformLocation("u_projection");
+
+	Shader lightShader;
+	lightShader.loadShaderProgramFromFile("resources/LightShader.vert", "resources/LightShader.frag");
+	
+	GLuint u_lightColor = lightShader.GetUniformLocation("u_lightColor");
+	GLuint u_objectColor = lightShader.GetUniformLocation("u_objectColor");
+	GLuint u_lightTransform = lightShader.GetUniformLocation("u_transform");
+	GLuint u_lightView = lightShader.GetUniformLocation("u_view");
+	GLuint u_lightProjection = lightShader.GetUniformLocation("u_projection");
 
 #pragma endregion
 
@@ -285,6 +293,7 @@ int main()
 		glfwGetWindowSize(window, &w, &h);
 		glViewport(0, 0, w, h);
 
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		processInput(window);
@@ -293,15 +302,14 @@ int main()
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-#pragma endregion
-
 		// Window for color picker
 		ImGui::Begin("Window");
 		ImGui::Text("Color Test");
-		static float color[3] = { 0.5, 0.5, 0.5 };
+		static float color[3] = { 1.0f, 1.0f, 1.0f };
 		ImGui::ColorPicker3("Color: ", color);
 		//ImGui::ShowDemoWindow();
 		ImGui::End();
+#pragma endregion
 
 #pragma region Matrix
 
@@ -316,33 +324,33 @@ int main()
 #pragma endregion
 
 		shader.bind();
-		glUniform1i(u_texture1, 0);
-		glUniform1i(u_texture2, 1);
+		glUniform3fv(u_cubeColor, 1, color);
+		static float cubeLightColor[3] = { 1.0f, 1.0f, 1.0f };
+		glUniform3fv(u_cubeLightColor, 1, cubeLightColor);
 
-		glUniform3fv(u_color, 1, color);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
-
-		glBindVertexArray(VAO);
-
+		// Transform Matrix
+		glm::mat4 transform = glm::mat4(1.0f);
+		transform = glm::translate(transform, cubePositions[0]);
+		glUniformMatrix4fv(u_transform, 1, GL_FALSE, glm::value_ptr(transform));
 		glUniformMatrix4fv(u_view, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(u_projection, 1, GL_FALSE, glm::value_ptr(projection));
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			// Transform Matrix
-			glm::mat4 transform = glm::mat4(1.0f);
-			transform = glm::translate(transform, cubePositions[i]);
-			float angle = 20.0f * i;
-			if (angle == 0) { angle = 10; }
-			transform = glm::rotate(transform, (float)glfwGetTime() * glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			glUniformMatrix4fv(u_transform, 1, GL_FALSE, glm::value_ptr(transform));
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
+		lightShader.bind();
+		static float lightColor[3] = { 0.5, 0.5, 0.5 };
+		static float objectColor[3] = { 0.5, 0.5, 0.5 };
+		glUniform3fv(u_lightColor, 1, lightColor);
+		glUniform3fv(u_objectColor, 1, objectColor);
+
+		glm::mat4 lightTransform = glm::mat4(1.0f);
+		lightTransform = glm::translate(lightTransform, cubePositions[4]);
+		lightTransform = glm::scale(lightTransform, glm::vec3(0.2f));
+		glUniformMatrix4fv(u_lightTransform, 1, GL_FALSE, glm::value_ptr(lightTransform));
+		glUniformMatrix4fv(u_lightView, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(u_lightProjection, 1, GL_FALSE, glm::value_ptr(projection));
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 #pragma region ImGui
 		ImGui::Render();
@@ -356,6 +364,8 @@ int main()
 		glfwPollEvents();
 	}
 
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteVertexArrays(1, &lightVAO);
 	glDeleteBuffers(1, &buffer);
 
 	glfwDestroyWindow(window);

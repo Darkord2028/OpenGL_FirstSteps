@@ -66,4 +66,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\LightShader.frag" />
+    <None Include="resources\LightShader.vert" />
+    <None Include="resources\Shader.frag" />
+    <None Include="resources\Shader.vert" />
+  </ItemGroup>
 </Project>
