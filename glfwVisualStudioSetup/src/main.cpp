@@ -73,6 +73,41 @@ glm::vec3 CameraUp = glm::vec3(0.0f, 0.1f, 0.0f);
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+bool firstMouse = true;
+float lastX = 400;
+float lastY = 300;
+float sensivity = 0.1f;
+
+float yaw = 0;
+float pitch = 0;
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xOffset = (xpos - lastX) * sensivity;
+	float yOffset = (lastY - ypos) * sensivity;
+	lastX = xpos;
+	lastY = ypos;
+
+	yaw += xOffset;
+	pitch += yOffset;
+
+	if (pitch > 89.0f) pitch = 89.0f;
+	if (pitch < -89.0f) pitch = -89.0f;
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw) * cos(glm::radians(yaw)));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw) * cos(glm::radians(pitch)));
+	CameraFront = glm::normalize(direction);
+}
+
 void processInput(GLFWwindow* window)
 {
 	const float cameraSpeed = 5.0f * deltaTime;
@@ -84,6 +119,8 @@ void processInput(GLFWwindow* window)
 		CameraPos -= glm::normalize(glm::cross(CameraFront, CameraUp)) * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		CameraPos += glm::normalize(glm::cross(CameraFront, CameraUp)) * cameraSpeed;
+	if (glfwGetMouseButton(window, 1) == GLFW_PRESS)
+		glfwSetCursorPosCallback(window, mouse_callback);
 }
 
 int main()
@@ -162,15 +199,11 @@ int main()
 	ImGui_ImplOpenGL3_Init("#version 330");
 #pragma endregion
 
-#pragma region VAO
+#pragma region buffer
 
 	GLuint VAO = 0;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-
-#pragma endregion
-
-#pragma region buffer
 
 	GLuint buffer = 0;
 	glGenBuffers(1, &buffer);
@@ -239,6 +272,8 @@ int main()
 	};
 
 	glEnable(GL_DEPTH_TEST);
+	
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	while (!glfwWindowShouldClose(window))
 	{
