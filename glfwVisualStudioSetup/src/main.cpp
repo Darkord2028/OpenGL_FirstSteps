@@ -259,10 +259,9 @@ int main()
 	lightShader.loadShaderProgramFromFile("resources/LightShader.vert", "resources/LightShader.frag");
 	
 	GLuint u_lightColor = lightShader.GetUniformLocation("u_lightColor");
-	GLuint u_objectColor = lightShader.GetUniformLocation("u_objectColor");
-	GLuint u_lightTransform = lightShader.GetUniformLocation("u_transform");
-	GLuint u_lightView = lightShader.GetUniformLocation("u_view");
-	GLuint u_lightProjection = lightShader.GetUniformLocation("u_projection");
+	GLuint u_lightTransform = lightShader.GetUniformLocation("u_lightTransform");
+	GLuint u_lightView = lightShader.GetUniformLocation("u_lightView");
+	GLuint u_lightProjection = lightShader.GetUniformLocation("u_lightProjection");
 
 #pragma endregion
 
@@ -307,6 +306,10 @@ int main()
 		ImGui::Text("Color Test");
 		static float color[3] = { 1.0f, 1.0f, 1.0f };
 		ImGui::ColorPicker3("Color: ", color);
+
+		ImGui::Text("Light Color Test");
+		static float lightColor[3] = { 1.0f, 1.0f, 1.0f };
+		ImGui::ColorPicker3("Light Color: ", lightColor);
 		//ImGui::ShowDemoWindow();
 		ImGui::End();
 #pragma endregion
@@ -325,8 +328,7 @@ int main()
 
 		shader.bind();
 		glUniform3fv(u_cubeColor, 1, color);
-		static float cubeLightColor[3] = { 1.0f, 1.0f, 1.0f };
-		glUniform3fv(u_cubeLightColor, 1, cubeLightColor);
+		glUniform3fv(u_cubeLightColor, 1, lightColor);
 
 		// Transform Matrix
 		glm::mat4 transform = glm::mat4(1.0f);
@@ -338,13 +340,12 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		lightShader.bind();
-		static float lightColor[3] = { 0.5, 0.5, 0.5 };
 		static float objectColor[3] = { 0.5, 0.5, 0.5 };
 		glUniform3fv(u_lightColor, 1, lightColor);
-		glUniform3fv(u_objectColor, 1, objectColor);
 
 		glm::mat4 lightTransform = glm::mat4(1.0f);
-		lightTransform = glm::translate(lightTransform, cubePositions[4]);
+		glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+		lightTransform = glm::translate(lightTransform, lightPos);
 		lightTransform = glm::scale(lightTransform, glm::vec3(0.2f));
 		glUniformMatrix4fv(u_lightTransform, 1, GL_FALSE, glm::value_ptr(lightTransform));
 		glUniformMatrix4fv(u_lightView, 1, GL_FALSE, glm::value_ptr(view));
