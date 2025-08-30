@@ -167,12 +167,46 @@ void Shader::clear()
 	*this = {};
 }
 
-void Shader::SetVec3(GLuint ID, glm::vec3 value)
+void Shader::SetFloat(const std::string& name, float value) const
 {
-	glUniform3f(ID, value.x, value.y, value.z);
+	GLint rez = glGetUniformLocation(id, name.c_str());
+
+	if (rez == -1)
+	{
+		std::cout << "Uniform error: " << name << "\n";
+		return; // prevent invalid call
+	}
+
+	glUniform1f(rez, value);
 }
 
-GLint Shader::GetUniformLocation(const char* name)
+void Shader::SetInt(const std::string& name, int value) const
+{
+	GLint rez = glGetUniformLocation(id, name.c_str());
+
+	if (rez == -1)
+	{
+		std::cout << "Uniform error: " << name << "\n";
+		return; // prevent invalid call
+	}
+
+	glUniform1i(rez, value);
+}
+
+void Shader::SetVec3(const std::string &name, const glm::vec3 &value) const
+{
+	GLint rez = glGetUniformLocation(id, name.c_str());
+
+	if (rez == -1)
+	{
+		std::cout << "Uniform error: " << name << "\n";
+		return; // prevent invalid call
+	}
+
+	glUniform3f(rez, value.x, value.y, value.z);
+}
+
+GLint Shader::GetUniformLocation(const char* name) const
 {
 	GLint rez = glGetUniformLocation(id, name);
 
